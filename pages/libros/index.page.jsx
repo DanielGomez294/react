@@ -58,7 +58,7 @@ const Page = () => {
   return (
     <>
       <div className="form">
-        <label htmlFor="">titulo</label>
+        <label>titulo</label>
         <br />
         <input name="titulo" type="text" onChange={(e) => {
           handleChange(e)
