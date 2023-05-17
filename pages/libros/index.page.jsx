@@ -49,6 +49,44 @@ const Page = () => {
       })
   }
 
+  const [st, setSt] = useState([])
+
+  const deleteData = (id) => {
+    const URL = "http://localhost:7000/eliminar"
+    axios.post(URL, {
+      id: id
+    }).then(function (response) {
+      console.log(response.data);
+      // getData();
+      setSt(response.data);
+    }).catch(function (error) {
+      return console.log(error)
+    })
+
+
+  }
+
+
+  // const getEditData = (uuid) => {
+  //   const URL = "http://localhost:7000/editar"
+  //   axios.post(URL, {
+  //     uuid: uuid
+  //   }).then(function (response) {
+  //     // return console.log(response.data);
+  //     // getData();
+  //     setSt(response.data);
+  //   }).catch(function (error) {
+  //     return console.log(error)
+  //   })
+  // }
+
+  useEffect(() => {
+    getData();
+  }, [st])
+
+
+
+
   useEffect(() => {
     getData();
   }, [])
@@ -68,9 +106,12 @@ const Page = () => {
         <br /><br />
         <label htmlFor="">titulo</label>
         <br />
-        <input name="desc" onChange={(e) => {
-          handleChange(e)
-        }} type="text" placeholder="escribe algo" />
+        <input
+          // value={} 
+          name="desc"
+          onChange={(e) => {
+            handleChange(e)
+          }} type="text" placeholder="escribe algo" />
         <br /><br />
         <button type="button" onClick={() => {
           sendData();
@@ -85,13 +126,17 @@ const Page = () => {
             libros.map((libro, index) => {
               return (
                 <div key={index}>
+                  <p> {libro.Uuid} </p>
                   <p> {libro.titulo} </p>
+                  <p> {libro.description} </p>
                   <button onClick={() => {
                     console.log("editar", libro.uuid)
                   }
                   }>editar</button>
                   <button onClick={() => {
-                    console.log("eliminar", libro.uuid)
+                    console.log("eliminar", libro.Uuid)
+
+                    deleteData(libro.Uuid)
                   }
                   }>eliminar</button>
                 </div>
@@ -104,6 +149,7 @@ const Page = () => {
 
     </>
   )
+
 };
 
 
